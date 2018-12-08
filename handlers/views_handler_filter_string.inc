@@ -274,7 +274,9 @@ class views_handler_filter_string extends views_handler_filter {
    * {@inheritdoc}
    */
   public function op_contains($field) {
-    $this->query->add_where($this->options['group'], $field, '%' . db_like($this->value) . '%', 'LIKE');
+    if (!empty($this->value)) {
+      $this->query->add_where($this->options['group'], $field, '%' . db_like($this->value) . '%', 'LIKE');
+    }
   }
 
   /**
