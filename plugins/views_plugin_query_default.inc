@@ -256,12 +256,13 @@ class views_plugin_query_default extends views_plugin_query {
       $base_table_data = views_fetch_data($base_table);
       if (!empty($base_table_data['table']['base']['access query tag'])) {
         $access_tag = $base_table_data['table']['base']['access query tag'];
+        $disable_rewrite = !empty($this->options['disable_sql_rewrite']);
         $form['disable_sql_rewrite'] = array(
           '#title' => t('Disable access checks'),
           '#description' => t('Do not apply %access_tag checks to this query. Selecting this option omits that tag from the alterable query.', array('%access_tag' => $access_tag)),
           '#type' => 'checkbox',
-          '#default_value' => !empty($this->options['disable_sql_rewrite']),
-          '#suffix' => '<div class="messages warning sql-rewrite-warning js-hide">'
+          '#default_value' => $disable_rewrite,
+          '#suffix' => '<div class="messages warning sql-rewrite-warning' . ($disable_rewrite ? '' : ' js-hide') . '">'
             . t('WARNING: Disabling access checks means that %access_tag security is disabled. This may allow users to see data they should not be able to see if your view is misconfigured. Please use this option only if you understand and accept this security risk.', array('%access_tag' => $access_tag))
             . '</div>',
         );
