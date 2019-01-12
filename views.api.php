@@ -752,7 +752,7 @@ function hook_views_plugin_option_definition_alter(&$options, $plugin) {
  * Alter existing handler option definitions.
  *
  * This can be used to edit default or add new option definitions to existing
- * handers. The reason for doing this is that only overriding the relevent form
+ * handlers. The reason for doing this is that only overriding the relevent form
  * with hook_form_alter() is insufficent because submitted form values will be
  * ignored if they haven't been declared as an available option.
  *
