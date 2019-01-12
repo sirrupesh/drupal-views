@@ -2987,6 +2987,10 @@ function views_ui_add_form_to_stack($key, &$view, $display_id, $args, $top = FAL
  * together.
  */
 function views_ui_ajax_form($js, $key, $view, $display_id = '') {
+  $args = func_get_args();
+  // Remove the known args.
+  array_splice($args, 0, 4);
+
   // Reset the cache of IDs. Drupal rather aggressively prevents id duplication
   // but this causes it to remember IDs that are no longer even being used.
   if (isset($_POST['ajax_html_ids'])) {
@@ -2999,9 +3003,6 @@ function views_ui_ajax_form($js, $key, $view, $display_id = '') {
   }
 
   views_include('ajax');
-  $args = func_get_args();
-  // Remove the known args.
-  array_splice($args, 0, 4);
 
   $form_state = views_ui_build_form_state($js, $key, $view, $display_id, $args);
   // check to see if this is the top form of the stack. If it is, pop

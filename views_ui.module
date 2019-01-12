@@ -804,18 +804,18 @@ function views_ui_contextual_links_suppress_pop() {
  * @see http://drupal.org/node/774876
  */
 function views_ui_ajax_get_form($form_id) {
-  // @see ajax_get_form()
-  $form_state = array(
-    'no_redirect' => TRUE,
-  );
-  $form_state['rebuild_info']['copy']['#build_id'] = TRUE;
-  $form_state['rebuild_info']['copy']['#action'] = TRUE;
+  $args = func_get_args();
+  $form_state = array();
 
   // @see drupal_get_form()
-  $args = func_get_args();
   array_shift($args);
   $form_state['build_info']['args'] = $args;
   $form = drupal_build_form($form_id, $form_state);
+
+  // @see ajax_get_form()
+  $form_state['no_redirect'] = TRUE;
+  $form_state['rebuild_info']['copy']['#build_id'] = TRUE;
+  $form_state['rebuild_info']['copy']['#action'] = TRUE;
 
   // @see ajax_form_callback()
   if (!empty($form_state['triggering_element'])) {
