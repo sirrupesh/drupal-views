@@ -629,6 +629,12 @@ class views_handler_filter extends views_handler {
     if (!$this->view->display_handler->is_identifier_unique($form_state['id'], $form_state['values']['options']['expose']['identifier'])) {
       form_error($form['expose']['identifier'], t('This identifier is used by another handler.'));
     }
+
+    // Filter out roles which weren't selected, so that they aren't exported.
+    // This is purely cosmetic.
+    if (!empty($form_state['values']['options']['expose']['remember_roles'])) {
+      $form_state['values']['options']['expose']['remember_roles'] = array_filter($form_state['values']['options']['expose']['remember_roles']);
+    }
   }
 
   /**
