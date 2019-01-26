@@ -20,7 +20,7 @@
   Drupal.views.instances = {};
 
   /**
-   * Javascript object for a certain view.
+   * JavaScript object for a certain view.
    */
   Drupal.views.ajaxView = function(settings) {
     var selector = '.view-dom-id-' + settings.view_dom_id;

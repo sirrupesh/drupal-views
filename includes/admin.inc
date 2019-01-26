@@ -691,7 +691,7 @@ function views_ui_ajax_update_form($form, $form_state) {
 }
 
 /**
- * Non-Javascript fallback for updating the add view form.
+ * Non-JavaScript fallback for updating the add view form.
  */
 function views_ui_nojs_submit($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
@@ -3171,7 +3171,7 @@ function views_ui_reorder_displays_form($form, &$form_state) {
   $form['#title'] = t('Displays Reorder');
   $form['#section'] = 'reorder';
 
-  // Add javascript settings that will be added via $.extend for tabledragging.
+  // Add JavaScript settings that will be added via $.extend for tabledragging.
   $form['#js']['tableDrag']['reorder-displays']['weight'][0] = array(
     'target' => 'weight',
     'source' => NULL,
@@ -3554,7 +3554,7 @@ function views_ui_rearrange_form($form, &$form_state) {
     );
   }
 
-  // Add javascript settings that will be added via $.extend for tabledragging.
+  // Add JavaScript settings that will be added via $.extend for tabledragging.
   $form['#js']['tableDrag']['arrange']['weight'][0] = array(
     'target' => 'weight',
     'source' => NULL,
@@ -5042,7 +5042,7 @@ function views_ui_admin_settings_advanced() {
   $form['debug']['views_no_javascript'] = array(
     '#type' => 'checkbox',
     '#title' => t('Disable JavaScript with Views'),
-    '#description' => t("If you are having problems with the JavaScript, you can disable it here. The Views UI should degrade and still be usable without javascript; it's just not as good."),
+    '#description' => t("If you are having problems with the JavaScript, you can disable it here. The Views UI should degrade and still be usable without JavaScript; it's just not as good."),
     '#default_value' => variable_get('views_no_javascript', FALSE),
   );
 
