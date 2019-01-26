@@ -787,7 +787,7 @@ function hook_views_handler_option_definition_alter(&$options, $handler) {
  *   - api: (required) The version of the Views API the module implements.
  *   - path: (optional) If includes are stored somewhere other than within the
  *     root module directory, specify its path here.
- *   - template path: (optional) A path where the module has stored it's views
+ *   - template path: (optional) A path where the module has stored its views
  *     template files. When you have specified this key views automatically
  *     uses the template files for the views. You can use the same naming
  *     conventions like for normal views template files.

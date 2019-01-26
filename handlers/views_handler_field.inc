@@ -68,7 +68,7 @@ class views_handler_field extends views_handler {
 
   /**
    * @var array
-   * Stores additional fields which get's added to the query.
+   * Stores additional fields which get added to the query.
    * The generated aliases are stored in $aliases.
    */
   public $additional_fields = array();
