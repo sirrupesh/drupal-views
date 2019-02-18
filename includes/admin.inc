@@ -1598,7 +1598,7 @@ function views_ui_get_display_tab_details($view, $display) {
   $is_enabled = $display->handler->get_option('enabled');
 
   if (!$is_display_deleted && $is_deletable && !$is_default) {
-    $prefix = '<div class="ctools-no-js ctools-button ctools-dropbutton"><div class="ctools-link"><a href="#" class="ctools-twisty ctools-text">open</a></div><div class="ctools-content"><ul class="horizontal right actions">';
+    $prefix = '<div class="ctools-no-js ctools-button ctools-dropbutton"><div class="ctools-link"><a href="#" class="ctools-twisty ctools-text"><span class="element-invisible">open</span></a></div><div class="ctools-content"><ul class="horizontal right actions">';
     $suffix = '</ul></div></div>';
     $item_element = 'li';
   }
