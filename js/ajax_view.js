@@ -121,6 +121,14 @@
     var $link = $(link);
     var viewData = {};
     var href = $link.attr('href');
+
+    // Provide a default page if none has been set. This must be done
+    // prior to merging with settings to avoid accidentally using the
+    // page landed on instead of page 1.
+    if (typeof(viewData.page) === 'undefined') {
+      viewData.page = 0;
+    }
+
     // Construct an object using the settings defaults and then overriding
     // with data specific to the link.
     $.extend(
