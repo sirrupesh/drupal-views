@@ -168,6 +168,24 @@ abstract class ViewsSqlTest extends ViewsTestCase {
   }
 
   /**
+   * Create a term.
+   *
+   * @param int $vid
+   *   The vocabulary ID that the term is to be added to.
+   *
+   * @return object
+   *   A full term object with a random name.
+   */
+  protected function drupalCreateTerm($vid) {
+    $term = new stdClass();
+    $term->name = $this->randomName();
+    $term->description = $this->randomName();
+    $term->vid = $vid;
+    taxonomy_term_save($term);
+    return $term;
+  }
+
+  /**
    * This function allows to enable views ui from a higher class which can't
    * change the setup function anymore.
    *
