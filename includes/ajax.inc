@@ -72,7 +72,8 @@ function views_ajax() {
       // Reuse the same DOM id so it matches that in Drupal.settings.
       $view->dom_id = $dom_id;
 
-      $commands[] = ajax_command_replace('.view-dom-id-' . $dom_id, $view->preview($display_id, $args));
+      // Always return HTML with the same DOM ID that was sent by the browser.
+      $commands[] = ajax_command_replace('.view-dom-id-' . $dom_id, preg_replace('/view-dom-id-[a-zA-Z0-9_-]+/', 'view-dom-id-' . $view->dom_id, $view->preview($display_id, $args), 1));
     }
     drupal_alter('views_ajax_data', $commands, $view);
     return array('#type' => 'ajax', '#commands' => $commands);
