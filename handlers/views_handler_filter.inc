@@ -135,6 +135,8 @@ class views_handler_filter extends views_handler {
         'use_operator' => array('default' => FALSE, 'bool' => TRUE),
         'operator_label' => array('default' => '', 'translatable' => TRUE),
         'operator' => array('default' => ''),
+        'limit_operators' => array('default' => FALSE, 'bool' => TRUE),
+        'available_operators' => array('default' => array()),
         'identifier' => array('default' => ''),
         'required' => array('default' => FALSE, 'bool' => TRUE),
         'remember' => array('default' => FALSE, 'bool' => TRUE),
@@ -274,6 +276,8 @@ class views_handler_filter extends views_handler {
       $this->value_submit($form, $form_state);
     }
     if (!empty($this->options['exposed'])) {
+      $options = &$form_state['values']['options']['expose'];
+      $options['available_operators'] = (!empty($options['use_operator']) && !empty($options['limit_operators'])) ? array_filter($options['available_operators']) : array();
       $this->expose_submit($form, $form_state);
     }
     if ($this->is_a_group()) {
@@ -301,6 +305,21 @@ class views_handler_filter extends views_handler {
   public function operator_form(&$form, &$form_state) {
     $options = $this->operator_options();
     if (!empty($options)) {
+      $available = $this->options['expose']['available_operators'];
+      if ($this->options['expose']['limit_operators'] && count($available)) {
+        foreach ($options as $key => $value) {
+          if (!isset($available[$key])) {
+            unset($options[$key]);
+          }
+        }
+
+        // Make sure we have a valid default value if the current one is
+        // excluded.
+        if (!isset($options[$this->operator])) {
+          // Just choose the first.
+          $this->operator = key($options);
+        }
+      }
       $form['operator'] = array(
         '#type' => count($options) < 10 ? 'radios' : 'select',
         '#title' => t('Operator'),
@@ -511,6 +530,33 @@ class views_handler_filter extends views_handler {
         '#title' => t('Required'),
         '#default_value' => $this->options['expose']['required'],
       );
+
+      $operator_options = $this->operator_options();
+      if (count($operator_options)) {
+        $form['expose']['limit_operators'] = array(
+          '#type' => 'checkbox',
+          '#title' => t('Limit operators'),
+          '#description' => t('When checked, the operator will be exposed to the user'),
+          '#default_value' => !empty($this->options['expose']['limit_operators']),
+          '#dependency' => array(
+            'edit-options-expose-use-operator' => array(1)
+          ),
+          '#description' => t('Restrict which operators will be available to select in the exposed operator form.'),
+        );
+
+        $form['expose']['available_operators'] = array(
+          '#type' => 'checkboxes',
+          '#title' => t('Limit the exposed operators'),
+          '#default_value' => $this->options['expose']['available_operators'],
+          '#prefix' => '<div id="edit-options-expose-available-operators-wrapper"><div id="edit-options-expose-available-operators">',
+          '#suffix' => '</div></div>',
+          '#description' => t('Select which operators will be available to select in the exposed operator form. If none are selected, all the operators listed here will be used.'),
+          '#options' => $operator_options,
+          '#dependency' => array(
+            'edit-options-expose-limit-operators' => array(1)
+          ),
+        );
+      }
     }
     else {
       $form['expose']['required'] = array(
