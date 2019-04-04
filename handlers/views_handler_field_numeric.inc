@@ -118,6 +118,11 @@ class views_handler_field_numeric extends views_handler_field {
   public function render($values) {
     $value = $this->get_value($values);
 
+    // Output nothing if the value is null.
+    if (is_null($value)) {
+      return '';
+    }
+
     // Hiding should happen before rounding or adding prefix/suffix.
     if ($this->options['hide_empty'] && empty($value) && ($value !== 0 || $this->options['empty_zero'])) {
       return '';
