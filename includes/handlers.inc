@@ -278,6 +278,9 @@ class views_handler extends views_object {
       return $title;
     }
     $title = ($short && isset($this->definition['title short'])) ? $this->definition['title short'] : $this->definition['title'];
+    if (empty($this->definition['group'])) {
+      return $title;
+    }
     return t('!group: !title', array('!group' => $this->definition['group'], '!title' => $title));
   }
 
