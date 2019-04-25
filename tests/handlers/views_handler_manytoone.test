@@ -170,10 +170,11 @@ class ViewsHandlerManyToOneTest extends ViewsSqlTest {
     // Clear views data cache.
     $this->clearViewsDataCache();
 
-    // Create two tags.
+    // Create 62 tags.
     $vocabulary = taxonomy_vocabulary_machine_name_load('tags');
-    $this->terms[] = $this->createTerm($vocabulary);
-    $this->terms[] = $this->createTerm($vocabulary);
+    for ($i = 0; $i < 62; $i++) {
+      $this->terms[] = $this->createTerm($vocabulary);
+    }
 
     // Create a node where the field_bool is checked, field_list is '1' and
     // tag is term 2.
@@ -211,6 +212,38 @@ class ViewsHandlerManyToOneTest extends ViewsSqlTest {
     $account->{$this->fields[1]['field_name']}[LANGUAGE_NONE][]['value'] = '1';
     $account->field_tags[LANGUAGE_NONE][]['tid'] = $this->terms[0]->tid;
     $this->accounts[0] = user_save($account);
+  }
+
+  /**
+   * Tests "none of" filter with terms in excess of JOIN limit selected.
+   */
+  public function testJoinLimitNoneOf() {
+    $view = $this->getJoinLimitNoneOfTestView();
+    $this->executeView($view);
+
+    // Assert that nodes have been created and have expected field values.
+    $value = field_get_items('node', $this->nodes[0], 'field_tags', LANGUAGE_NONE);
+    $value = isset($value[0]['tid']) ? (int) $value[0]['tid'] : 0;
+    $this->assertIdentical($value, 2, 'First node has been created and tags field references term 2.');
+
+    $value = field_get_items('node', $this->nodes[1], 'field_tags', LANGUAGE_NONE);
+    $value = isset($value[0]['tid']) ? (int) $value[0]['tid'] : 0;
+    $this->assertIdentical($value, 1, 'Second node has been created and tags field references term 1.');
+
+    // Assert that user has been created and has expected field values.
+    $value = field_get_items('user', $this->accounts[0], 'field_tags', LANGUAGE_NONE);
+    $value = isset($value[0]['tid']) ? (int) $value[0]['tid'] : 0;
+    $this->assertIdentical($value, 1, 'User has been created and tags field references term 1.');
+
+    // Assert that node id with empty field value matches user id so that the
+    // node would be excluded from the result, if the joins are missing extras.
+    $this->assertIdentical((int) $this->accounts[0]->uid, (int) $this->nodes[1]->nid, 'Node id of second node matches uid of first user.');
+
+    // Assert correct result set.
+    $result_count = isset($view->result) && is_array($view->result) ? count($view->result) : 0;
+    $this->assertEqual($result_count, 1, 'View has one result.');
+    $nid = isset($view->result[0]->nid) ? (int) $view->result[0]->nid : 0;
+    $this->assertIdentical($nid, (int) $this->nodes[1]->nid, 'View result has correct node id.');
   }
 
   /**
@@ -932,6 +965,131 @@ class ViewsHandlerManyToOneTest extends ViewsSqlTest {
           2 => '2',
         ),
       ),
+    );
+    $handler->display->display_options['filters']['field_tags_tid']['type'] = 'select';
+    $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
+    return $view;
+  }
+
+  /**
+   * Generates test_join_limit_none_of view.
+   */
+  protected function getJoinLimitNoneOfTestView() {
+    $view = new view();
+    $view->name = 'test_join_limit_none_of';
+    $view->description = '';
+    $view->tag = 'default';
+    $view->base_table = 'node';
+    $view->human_name = 'test_join_limit_none_of';
+    $view->core = 7;
+    $view->api_version = '3.0';
+    $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+    /* Display: Master */
+    $handler = $view->new_display('default', 'Master', 'default');
+    $handler->display->display_options['use_more_always'] = FALSE;
+    $handler->display->display_options['access']['type'] = 'perm';
+    $handler->display->display_options['cache']['type'] = 'none';
+    $handler->display->display_options['query']['type'] = 'views_query';
+    $handler->display->display_options['exposed_form']['type'] = 'basic';
+    $handler->display->display_options['pager']['type'] = 'full';
+    $handler->display->display_options['style_plugin'] = 'default';
+    $handler->display->display_options['row_plugin'] = 'fields';
+    /* Field: Content: Title */
+    $handler->display->display_options['fields']['title']['id'] = 'title';
+    $handler->display->display_options['fields']['title']['table'] = 'node';
+    $handler->display->display_options['fields']['title']['field'] = 'title';
+    $handler->display->display_options['fields']['title']['label'] = '';
+    $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+    $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+    /* Sort criterion: Content: Post date */
+    $handler->display->display_options['sorts']['created']['id'] = 'created';
+    $handler->display->display_options['sorts']['created']['table'] = 'node';
+    $handler->display->display_options['sorts']['created']['field'] = 'created';
+    $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+    /* Filter criterion: Content: Published */
+    $handler->display->display_options['filters']['status']['id'] = 'status';
+    $handler->display->display_options['filters']['status']['table'] = 'node';
+    $handler->display->display_options['filters']['status']['field'] = 'status';
+    $handler->display->display_options['filters']['status']['value'] = 1;
+    $handler->display->display_options['filters']['status']['group'] = 1;
+    $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+    /* Filter criterion: Content: Tags (field_tags) */
+    $handler->display->display_options['filters']['field_tags_tid']['id'] = 'field_tags_tid';
+    $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
+    $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
+    $handler->display->display_options['filters']['field_tags_tid']['operator'] = 'not';
+    $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
+      2 => '2',
+      3 => '3',
+      4 => '4',
+      5 => '5',
+      6 => '6',
+      7 => '7',
+      8 => '8',
+      9 => '9',
+      10 => '10',
+      11 => '11',
+      12 => '12',
+      13 => '13',
+      14 => '14',
+      15 => '15',
+      16 => '16',
+      17 => '17',
+      18 => '18',
+      19 => '19',
+      20 => '20',
+      21 => '21',
+      22 => '22',
+      23 => '23',
+      24 => '24',
+      25 => '25',
+      26 => '26',
+      27 => '27',
+      28 => '28',
+      29 => '29',
+      30 => '30',
+      31 => '31',
+      32 => '32',
+      33 => '33',
+      34 => '34',
+      35 => '35',
+      36 => '36',
+      37 => '37',
+      38 => '38',
+      39 => '39',
+      40 => '40',
+      41 => '41',
+      42 => '42',
+      43 => '43',
+      44 => '44',
+      45 => '45',
+      46 => '46',
+      47 => '47',
+      48 => '48',
+      49 => '49',
+      50 => '50',
+      51 => '51',
+      52 => '52',
+      53 => '53',
+      54 => '54',
+      55 => '55',
+      56 => '56',
+      57 => '57',
+      58 => '58',
+      59 => '59',
+      60 => '60',
+      61 => '61',
+      62 => '62',
+      63 => '63',
+      64 => '64',
+      65 => '65',
+      66 => '66',
+      67 => '67',
+      68 => '68',
+      69 => '69',
+      61 => '61',
+      62 => '62',
     );
     $handler->display->display_options['filters']['field_tags_tid']['type'] = 'select';
     $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';

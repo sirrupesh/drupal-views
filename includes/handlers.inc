@@ -1006,7 +1006,8 @@ class views_many_to_one_helper {
 
       // Clone the join for each table:
       $this->handler->table_aliases = array();
-      foreach ($this->handler->value as $value) {
+      $values = $this->handler->operator === 'not' ? array($this->handler->value) : $this->handler->value;
+      foreach ($values as $value) {
         $join = $this->get_join();
         if ($this->handler->operator == 'and') {
           $join->type = 'INNER';
@@ -1019,7 +1020,7 @@ class views_many_to_one_helper {
           'value' => $value,
           'numeric' => !empty($this->handler->definition['numeric']),
         );
-        if ($this->handler->is_a_group() && is_array($value)) {
+        if (($this->handler->is_a_group() && is_array($value)) || $this->handler->operator === 'not') {
           $value = serialize($value);
         }
         // The table alias needs to be unique to this value across the
