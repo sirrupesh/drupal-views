@@ -1234,8 +1234,9 @@ If you would like to have the characters \'[\' and \']\' please use the html ent
    * Render this field as altered text, from a fieldset set by the user.
    */
   public function render_altered($alter, $tokens) {
-    // Filter this right away as our substitutions are already sanitized.
-    $value = filter_xss_admin($alter['text']);
+    // We trust admins so we allow any tag content. This is important for
+    // displays such as XML where we should not mess with tags.
+    $value = $alter['text'];
     $value = strtr($value, $tokens);
 
     return $value;
