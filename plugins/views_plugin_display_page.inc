@@ -502,8 +502,8 @@ class views_plugin_display_page extends views_plugin_display {
           '#type' => 'textfield',
           '#default_value' => $tab_options['weight'],
           '#size' => 5,
-          '#description' => t('If the parent menu item is a tab, enter the weight of the tab. The lower the number, the more to the left it will be.'),
-          '#dependency' => array('radio:tab_options[type]' => array('tab')),
+          '#description' => t('Enter the weight of the item. The lower the number, the more to the left it will be.'),
+          '#dependency' => array('radio:tab_options[type]' => array('normal', 'tab')),
         );
         break;
     }
