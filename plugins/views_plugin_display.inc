@@ -198,7 +198,7 @@ class views_plugin_display extends views_plugin {
       $query_settings = $this->get_option('query');
       $query_settings['options']['distinct'] = $distinct;
       $this->set_option('query', $query_settings);
-      // Clear the values
+      // Clear the values.
       $this->set_option('distinct', NULL);
       $changed = TRUE;
     }
@@ -499,7 +499,7 @@ class views_plugin_display extends views_plugin {
       'exposed_form' => array('exposed_form', 'exposed_form_options'),
       'exposed_form_options' => array('exposed_form', 'exposed_form_options'),
 
-      // These guys are special
+      // These guys are special.
       'header' => array('header'),
       'footer' => array('footer'),
       'empty' => array('empty'),
@@ -2338,7 +2338,7 @@ class views_plugin_display extends views_plugin {
         $template_path = isset($registry[$theme]['path']) ? $registry[$theme]['path'] . '/' : './';
         if (file_exists($template_path . $template)) {
           $hint = t('File found in folder @template-path', array('@template-path' => $template_path));
-          $template = '<strong title="'. $hint .'">' . $template . '</strong>';
+          $template = '<strong title="' . $hint . '">' . $template . '</strong>';
         }
         else {
           $template = '<strong class="error">' . $template . ' ' . t('(File not found, in folder @template-path)', array('@template-path' => $template_path)) . '</strong>';
@@ -2386,7 +2386,7 @@ class views_plugin_display extends views_plugin {
       case 'style_options':
         $style = TRUE;
       case 'row_options':
-        // if row, $style will be empty.
+        // If row, $style will be empty.
         $plugin = $this->get_plugin(empty($style) ? 'row' : 'style');
         if ($plugin) {
           $plugin->options_validate($form[$form_state['section']], $form_state);
@@ -2567,7 +2567,7 @@ class views_plugin_display extends views_plugin {
           if ($plugin) {
             $this->set_option($section, $form_state['values'][$section]);
             $this->set_option('style_options', array());
-            // send ajax form to options page if we use it.
+            // Send ajax form to options page if we use it.
             if (!empty($plugin->definition['uses options'])) {
               views_ui_add_form_to_stack('display', $this->view, $this->display->id, array('style_options'));
             }
@@ -2754,7 +2754,12 @@ class views_plugin_display extends views_plugin {
 
         $path = check_url(url($path, $url_options));
 
-        return theme($theme, array('more_url' => $path, 'new_window' => $this->use_more_open_new_window(), 'link_text' => check_plain($this->use_more_text()), 'view' => $this->view));
+        return theme($theme, array(
+          'more_url' => $path,
+          'new_window' => $this->use_more_open_new_window(),
+          'link_text' => check_plain($this->use_more_text()),
+          'view' => $this->view,
+        ));
       }
     }
   }
@@ -3064,7 +3069,7 @@ class views_plugin_display extends views_plugin {
     $output = '';
 
     // Cut the 's' off because the data is stored as the plural form but we need
-    // the singular form. Who designed that anyway? Oh yeah, I did. :(
+    // the singular form.
     if ($option != 'header' && $option != 'footer' && $option != 'empty') {
       $type = substr($option, 0, -1);
     }
@@ -3145,7 +3150,7 @@ class views_plugin_display extends views_plugin {
   }
 
   /**
-   * Special handling for plugin export
+   * Special handling for plugin export.
    *
    * Plugins other than styles are stored in array with 'type' being the key
    * to the plugin. For modern plugins, the options are stored in the 'options'
@@ -3277,8 +3282,8 @@ class views_plugin_display extends views_plugin {
    * Provide some helpful text for pagers.
    *
    * The result should contain of an array with:
-   * - items per page title
-   * - items per page description
+   * - items per page title.
+   * - items per page description.
    */
   public function get_pager_text() {
     return array(
