@@ -15,15 +15,14 @@
  *   available as standard operators.
  *
  * Object flags:
- *  You can set some specific behavior by setting up the following flags on
- *  your custom class.
- *
- * - always_multiple:
- *    Disable the possibility to force a single value.
- * - no_operator:
- *    Disable the possibility to use operators.
- * - always_required:
- *    Disable the possibility to allow a exposed input to be optional.
+ *   It's possible to set specific behavior using the following flags on the
+ *   custom class:
+ *   - always_multiple:
+ *     Disable the possibility to force a single value.
+ *   - no_operator:
+ *     Disable the possibility to use operators.
+ *   - always_required:
+ *     Disable the possibility to allow a exposed input to be optional.
  */
 
 /**
@@ -34,8 +33,10 @@
 class views_handler_filter extends views_handler {
 
   /**
-   * Contains the actual value of the field,either configured in the views ui
-   * or entered in the exposed filters.
+   * Contains the actual value of the field.
+   *
+   * This will be either configured in the views UI or entered in the exposed
+   * filters.
    *
    * @var mixed
    */
@@ -141,9 +142,11 @@ class views_handler_filter extends views_handler {
         'required' => array('default' => FALSE, 'bool' => TRUE),
         'remember' => array('default' => FALSE, 'bool' => TRUE),
         'multiple' => array('default' => FALSE, 'bool' => TRUE),
-        'remember_roles' => array('default' => array(
-          DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID,
-        )),
+        'remember_roles' => array(
+          'default' => array(
+            DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID,
+          ),
+        ),
       ),
     );
 
@@ -207,9 +210,8 @@ class views_handler_filter extends views_handler {
   /**
    * Provide the basic form which calls through to subforms.
    *
-   * If overridden, it is best to call through to the parent,
-   * or to at least make sure all of the functions in this form
-   * are called.
+   * If overridden, it is best to call through to the parent, or to at least
+   * make sure all of the functions in this form are called.
    */
   public function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
@@ -250,7 +252,7 @@ class views_handler_filter extends views_handler {
   }
 
   /**
-   * Simple validate handler
+   * Simple validate handler.
    */
   public function options_validate(&$form, &$form_state) {
     $this->operator_validate($form, $form_state);
@@ -297,8 +299,8 @@ class views_handler_filter extends views_handler {
   /**
    * Options form subform for setting the operator.
    *
-   * This may be overridden by child classes, and it must
-   * define $form['operator'];
+   * This may be overridden by child classes, and it must define
+   * $form['operator'].
    *
    * @see options_form()
    */
@@ -332,7 +334,7 @@ class views_handler_filter extends views_handler {
   /**
    * Provide a list of options for the default operator form.
    *
-   * Should be overridden by classes that don't override operator_form
+   * Should be overridden by classes that don't override operator_form.
    */
   public function operator_options() {
     return array();
@@ -539,7 +541,7 @@ class views_handler_filter extends views_handler {
           '#description' => t('When checked, the operator will be exposed to the user'),
           '#default_value' => !empty($this->options['expose']['limit_operators']),
           '#dependency' => array(
-            'edit-options-expose-use-operator' => array(1)
+            'edit-options-expose-use-operator' => array(1),
           ),
           '#description' => t('Restrict which operators will be available to select in the exposed operator form.'),
         );
@@ -553,7 +555,7 @@ class views_handler_filter extends views_handler {
           '#description' => t('Select which operators will be available to select in the exposed operator form. If none are selected, all the operators listed here will be used.'),
           '#options' => $operator_options,
           '#dependency' => array(
-            'edit-options-expose-limit-operators' => array(1)
+            'edit-options-expose-limit-operators' => array(1),
           ),
         );
       }
@@ -579,7 +581,7 @@ class views_handler_filter extends views_handler {
     );
 
     if (!empty($form['operator']['#type'])) {
-       // Increase the width of the left (operator) column.
+      // Increase the width of the left (operator) column.
       $form['operator']['#prefix'] = '<div class="views-group-box views-left-40">';
       $form['operator']['#suffix'] = '</div>';
       $form['value']['#prefix'] = '<div class="views-group-box views-right-60">';
@@ -598,7 +600,7 @@ class views_handler_filter extends views_handler {
         '#size' => 40,
         '#description' => t('This will appear before your operator select field.'),
         '#dependency' => array(
-          'edit-options-expose-use-operator' => array(1)
+          'edit-options-expose-use-operator' => array(1),
         ),
       );
       $form['expose']['operator_id'] = array(
@@ -608,7 +610,7 @@ class views_handler_filter extends views_handler {
         '#size' => 40,
         '#description' => t('This will appear in the URL after the ? to identify this operator.'),
         '#dependency' => array(
-          'edit-options-expose-use-operator' => array(1)
+          'edit-options-expose-use-operator' => array(1),
         ),
         '#fieldset' => 'more',
       );
@@ -841,9 +843,8 @@ class views_handler_filter extends views_handler {
     }
   }
 
-
   /**
-   * Render our chunk of the exposed filter form when selecting
+   * Render our chunk of the exposed filter form when selecting.
    *
    * You can override this if it doesn't do what you expect.
    */
@@ -857,7 +858,7 @@ class views_handler_filter extends views_handler {
       $operator = $this->options['expose']['operator_id'];
       $this->operator_form($form, $form_state);
       $form[$operator] = $form['operator'];
-      $form[$operator]['#title'] =  $this->options['expose']['operator_label'];
+      $form[$operator]['#title'] = $this->options['expose']['operator_label'];
       $form[$operator]['#title_display'] = 'invisible';
 
       $this->exposed_translate($form[$operator], 'operator');
@@ -874,7 +875,7 @@ class views_handler_filter extends views_handler {
         $boolean->value_value = $this->value_value = '';
         $boolean->value_options = $this->value_options = array(
           1 => t('Yes'),
-          0 => t('No')
+          0 => t('No'),
         );
         $boolean->value_form($form, $form_state);
       }
@@ -1022,7 +1023,7 @@ class views_handler_filter extends views_handler {
 
     // The string '- Any -' will not be rendered.
     // @see theme_views_ui_build_group_filter_form()
-    $groups = array('All' => '- Any -'); 
+    $groups = array('All' => '- Any -');
 
     // Provide 3 options to start when we are in a new group.
     if (count($this->options['group_info']['group_items']) == 0) {
@@ -1035,6 +1036,7 @@ class views_handler_filter extends views_handler {
       if (!empty($form_state['values']['options']['group_info']['group_items'][$item_id]['remove'])) {
         continue;
       }
+
       // Each rows contains three widgets:
       // a) The title, where users define how they identify a pair of operator
       //    | value.
@@ -1046,14 +1048,14 @@ class views_handler_filter extends views_handler {
       $row = array();
       $groups[$item_id] = '';
       $this->operator_form($row, $form_state);
-      // Force the operator form to be a select box. Some handlers uses
-      // radios and they occupy a lot of space in a table row.
+      // Force the operator form to be a select box. Some handlers uses radios
+      // and they occupy a lot of space in a table row.
       $row['operator']['#type'] = 'select';
       $row['operator']['#title'] = '';
       $this->value_form($row, $form_state);
 
       // Fix the dependencies to update value forms when operators changes.
-      // This is needed because forms are inside a new form and their ids
+      // This is needed because forms are inside a new form and their IDs
       // changes. Dependencies are used when operator changes from to
       // 'Between', 'Not Between', etc, and two or more widgets are displayed.
       $without_children = TRUE;
@@ -1108,6 +1110,7 @@ class views_handler_filter extends views_handler {
         ),
       );
     }
+
     // From all groups, let chose which is the default.
     $form['group_info']['default_group'] = array(
       '#type' => 'radios',
@@ -1116,8 +1119,9 @@ class views_handler_filter extends views_handler {
       '#required' => TRUE,
       '#attributes' => array(
         'class' => array('default-radios'),
-      )
+      ),
     );
+
     // From all groups, let chose which is the default.
     $form['group_info']['default_group_multiple'] = array(
       '#type' => 'checkboxes',
@@ -1125,7 +1129,7 @@ class views_handler_filter extends views_handler {
       '#default_value' => $this->options['group_info']['default_group_multiple'],
       '#attributes' => array(
         'class' => array('default-checkboxes'),
-      )
+      ),
     );
 
     $form['group_info']['add_group'] = array(
@@ -1152,7 +1156,6 @@ class views_handler_filter extends views_handler {
       $form_state['js settings'] = $js;
     }
   }
-
 
   /**
    * Make some translations to a form item to make it more suitable to exposing.
@@ -1257,13 +1260,13 @@ class views_handler_filter extends views_handler {
   /**
    * Transform the input from a grouped filter into a standard filter.
    *
-   * When a filter is a group, find the set of operator and values
-   * that the choosed item represents, and inform views that a normal
-   * filter was submitted by telling the operator and the value selected.
+   * When a filter is a group, find the set of operator and values that the
+   * choosen item represents, and inform views that a normal filter was
+   * submitted by telling the operator and the value selected.
    *
    * The param $selected_group_id is only passed when the filter uses the
-   * checkboxes widget, and this function will be called for each item
-   * choosed in the checkboxes.
+   * checkboxes widget, and this function will be called for each item choosen
+   * in the checkboxes.
    */
   public function convert_exposed_input(&$input, $selected_group_id = NULL) {
     if ($this->is_a_group()) {
@@ -1301,9 +1304,12 @@ class views_handler_filter extends views_handler {
   }
 
   /**
-   * Returns the options available for a grouped filter that users checkboxes
-   * as widget, and therefore has to be applied several times, one per
-   * item selected.
+   * Options available for a grouped filter which uses checkboxes.
+   *
+   * Note: has to be applied several times, one per item selected.
+   *
+   * @return array
+   *   The options available for a grouped filter.
    */
   public function group_multiple_exposed_input(&$input) {
     if (!empty($input[$this->options['group_info']['identifier']])) {
@@ -1313,7 +1319,7 @@ class views_handler_filter extends views_handler {
   }
 
   /**
-   *
+   * Indicate whether users can select multiple group items.
    *
    * @return bool
    *   TRUE if users can select multiple groups items of a grouped exposed
@@ -1325,8 +1331,9 @@ class views_handler_filter extends views_handler {
 
   /**
    * If set to remember exposed input in the session, store it there.
-   * This function is similar to store_exposed_input but modified to
-   * work properly when the filter is a group.
+   *
+   * This function is similar to store_exposed_input but modified to work
+   * properly when the filter is a group.
    */
   public function store_group_input($input, $status) {
     if (!$this->is_a_group() || empty($this->options['group_info']['identifier'])) {
@@ -1408,7 +1415,7 @@ class views_handler_filter extends views_handler {
   }
 
   /**
-   *
+   * Store the exposed input for processing later.
    */
   public function store_exposed_input($input, $status) {
     if (empty($this->options['exposed']) || empty($this->options['expose']['identifier'])) {
@@ -1487,9 +1494,9 @@ class views_handler_filter extends views_handler {
    * @return bool
    *   Whether the filter can be used in OR groups.
    */
-   public function can_group() {
-     return TRUE;
-   }
+  public function can_group() {
+    return TRUE;
+  }
 
 }
 
@@ -1544,13 +1551,14 @@ class views_handler_filter_broken extends views_handler_filter {
  * Filter by no empty values, though allow to use "0".
  *
  * @param string $var
+ *   The string to check.
  *
  * @return bool
+ *   Indicates if the argument is an empty string.
  */
 function _views_array_filter_zero($var) {
-  return trim($var) != "";
+  return trim($var) != '';
 }
-
 
 /**
  * @}
