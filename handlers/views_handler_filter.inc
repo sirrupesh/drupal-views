@@ -872,10 +872,10 @@ class views_handler_filter extends views_handler {
         $boolean = new views_handler_filter_boolean_operator();
         $boolean->value = $this->value = 'All';
         $boolean->value_value = $this->value_value = '';
-        $boolean->value_options = $this->value_options = [
+        $boolean->value_options = $this->value_options = array(
           1 => t('Yes'),
-          0 => t('No'),
-        ];
+          0 => t('No')
+        );
         $boolean->value_form($form, $form_state);
       }
       else {
