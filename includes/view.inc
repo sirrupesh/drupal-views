@@ -843,7 +843,11 @@ class view extends views_db_object {
 
       $argument->set_relationship();
 
-      $arg = isset($this->args[$position]) ? $this->args[$position] : NULL;
+      $arg = NULL;
+      if (isset($this->args[$position]) && $this->args[$position] !== '') {
+        $arg = $this->args[$position];
+      }
+
       $argument->position = $position;
 
       if (isset($arg) || $argument->has_default_argument()) {
