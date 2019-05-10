@@ -758,8 +758,15 @@ function template_preprocess_views_view_grid(&$vars) {
         $remainders--;
       }
     }
-    for ($i = 0; $i < count($rows[0]); $i++) {
-      // This should be string so that's okay :)
+
+    // Fill out the row with empty values, if needed.
+    if (!empty($handler->options['fill_single_line'])) {
+      $column_fill = $columns;
+    }
+    else {
+      $column_fill = count($rows[0]);
+    }
+    for ($i = 0; $i < $column_fill; $i++) {
       if (!isset($rows[count($rows) - 1][$i])) {
         $rows[count($rows) - 1][$i] = '';
       }
