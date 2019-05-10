@@ -350,6 +350,7 @@ class views_plugin_display_page extends views_plugin_display {
           '#field_prefix' => '<span dir="ltr">' . url(NULL, array('absolute' => TRUE)) . (variable_get('clean_url', 0) ? '' : '?q='),
           '#field_suffix' => '</span>&lrm;',
           '#attributes' => array('dir'=>'ltr'),
+          '#maxlength' => 255,
         );
         break;
 
