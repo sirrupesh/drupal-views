@@ -106,16 +106,17 @@
   };
 
   /**
-   * Attach the ajax behavior to a singe link.
+   * Attach the ajax behavior to a single link.
    */
   Drupal.views.ajaxView.prototype.attachPagerLinkAjax = function(id, link) {
     var $link = $(link);
-    // Don't attach to pagers inside nested views.
-    if ($link.closest('.view')[0] !== this.$view[0]) {
-      return;
-    }
     var viewData = {};
     var href = $link.attr('href');
+    // Don't attach to pagers inside nested views.
+    if ($link.closest('.view')[0] !== this.$view[0] &&
+      $link.closest('.view').parent().hasClass('attachment') === false) {
+      return;
+    }
 
     // Provide a default page if none has been set. This must be done
     // prior to merging with settings to avoid accidentally using the
@@ -127,11 +128,11 @@
     // Construct an object using the settings defaults and then overriding
     // with data specific to the link.
     $.extend(
-    viewData,
-    this.settings,
-    Drupal.Views.parseQueryString(href),
-    // Extract argument data from the URL.
-    Drupal.Views.parseViewArgs(href, this.settings.view_base_path)
+      viewData,
+      this.settings,
+      Drupal.Views.parseQueryString(href),
+      // Extract argument data from the URL.
+      Drupal.Views.parseViewArgs(href, this.settings.view_base_path)
     );
 
     // For anchor tags, these will go to the target of the anchor rather
