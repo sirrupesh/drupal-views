@@ -159,7 +159,7 @@ class views_handler_field extends views_handler {
               '@identifier' => $identifier,
               '@table' => $info['table'],
             );
-            debug(t('Handler @handler tried to add additional_field @identifier but @table could not be added!', $t_args));
+            debug(t('Handler @handler tried to add additional field @identifier but @table could not be added.', $t_args));
             $this->aliases[$identifier] = 'broken';
             continue;
           }
