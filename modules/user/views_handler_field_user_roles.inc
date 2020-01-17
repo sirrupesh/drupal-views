@@ -82,7 +82,7 @@ class views_handler_field_user_roles extends views_handler_field_prerender_list 
    * {@inheritdoc}
    */
   public function render_item($count, $item) {
-    return $item['role'];
+    return t($item['role']);
   }
 
   /**
