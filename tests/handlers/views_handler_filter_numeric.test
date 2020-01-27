@@ -43,8 +43,12 @@ class ViewsHandlerFilterNumericTest extends ViewsSqlTest {
     return $schema;
   }
 
-  function setUp() {
-    parent::setUp();
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp(array $modules = array()) {
+    parent::setUp($modules);
+
     $this->column_map = array(
       'views_test_name' => 'name',
       'views_test_age' => 'age',

@@ -22,13 +22,6 @@ class ViewsGlossaryTestCase extends ViewsSqlTest {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function setUp() {
-    parent::setUp('views');
-  }
-
-  /**
    * Tests the glossary feature.
    */
   public function testGlossaryView() {
