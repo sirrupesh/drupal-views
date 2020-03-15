@@ -2105,7 +2105,7 @@ function views_form_views_form_submit($form, &$form_state) {
  */
 function views_exposed_form($form, &$form_state) {
   // Don't show the form when batch operations are in progress.
-  if ($batch = batch_get() && isset($batch['current_set'])) {
+  if (($batch = batch_get()) && isset($batch['current_set'])) {
     return array(
       // Set the theme callback to be nothing to avoid errors in
       // template_preprocess_views_exposed_form().
