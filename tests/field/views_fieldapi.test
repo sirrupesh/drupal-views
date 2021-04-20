@@ -375,6 +375,7 @@ class viewsHandlerFieldFieldTest extends ViewsFieldApiTestHelper {
 
     for ($i = 0; $i < 3; $i++) {
       $rendered_field = $view->style_plugin->get_field($i, $this->fields[3]['field_name']);
+      $this->assertNotNull($rendered_field);
       $items = array();
       $pure_items = $this->nodes[$i]->{$this->fields[3]['field_name']}[LANGUAGE_NONE];
       $pure_items = array_splice($pure_items, 0, 3);
@@ -397,6 +398,7 @@ class viewsHandlerFieldFieldTest extends ViewsFieldApiTestHelper {
 
     for ($i = 0; $i < 3; $i++) {
       $rendered_field = $view->style_plugin->get_field($i, $this->fields[3]['field_name']);
+      $this->assertNotNull($rendered_field);
       $items = array();
       $pure_items = $this->nodes[$i]->{$this->fields[3]['field_name']}[LANGUAGE_NONE];
       $pure_items = array_splice($pure_items, 1, 3);
@@ -416,6 +418,7 @@ class viewsHandlerFieldFieldTest extends ViewsFieldApiTestHelper {
 
     for ($i = 0; $i < 3; $i++) {
       $rendered_field = $view->style_plugin->get_field($i, $this->fields[3]['field_name']);
+      $this->assertNotNull($rendered_field);
       $items = array();
       $pure_items = $this->nodes[$i]->{$this->fields[3]['field_name']}[LANGUAGE_NONE];
       array_splice($pure_items, 0, -3);
@@ -436,6 +439,7 @@ class viewsHandlerFieldFieldTest extends ViewsFieldApiTestHelper {
 
     for ($i = 0; $i < 3; $i++) {
       $rendered_field = $view->style_plugin->get_field($i, $this->fields[3]['field_name']);
+      $this->assertNotNull($rendered_field);
       $items = array();
       $pure_items = $this->nodes[$i]->{$this->fields[3]['field_name']}[LANGUAGE_NONE];
       $items[] = $pure_items[0]['value'];
@@ -453,6 +457,7 @@ class viewsHandlerFieldFieldTest extends ViewsFieldApiTestHelper {
 
     for ($i = 0; $i < 3; $i++) {
       $rendered_field = $view->style_plugin->get_field($i, $this->fields[3]['field_name']);
+      $this->assertNotNull($rendered_field);
       $items = array();
       $pure_items = $this->nodes[$i]->{$this->fields[3]['field_name']}[LANGUAGE_NONE];
       $pure_items = array_splice($pure_items, 0, 3);
