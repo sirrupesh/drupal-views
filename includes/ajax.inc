@@ -40,6 +40,8 @@ function views_ajax() {
         unset($cleaned_post[$key]);
       }
     }
+    // Remove the HTML IDs passed in via AJAX.
+    unset($_POST['ajax_html_ids']);
 
     // Load the view.
     $view = views_get_view($name);
