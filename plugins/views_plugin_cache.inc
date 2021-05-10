@@ -345,6 +345,7 @@ class views_plugin_cache extends views_plugin {
       'language' => $GLOBALS['language']->language,
       'language_content' => $GLOBALS['language_content']->language,
       'base_url' => $GLOBALS['base_url'],
+      'display_options' => $this->display->display_options,
     );
 
     if (empty($key_data['build_info'])) {
