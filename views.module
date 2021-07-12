@@ -1172,7 +1172,10 @@ function views_check_roles($rids, $account = NULL) {
   $account = isset($account) ? $account : $user;
   $roles = array_keys($account->roles);
   $roles[] = $account->uid ? DRUPAL_AUTHENTICATED_RID : DRUPAL_ANONYMOUS_RID;
-  return user_access('access all views', $account) || array_intersect(array_filter($rids), $roles);
+  $has_access = user_access('access all views', $account);
+  $rids = array_filter($rids);
+  $intersect = array_intersect($rids, $roles);
+  return $has_access || $intersect;
 }
 
 /**
