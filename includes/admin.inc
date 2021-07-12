@@ -2166,7 +2166,7 @@ function views_ui_import_validate($form, &$form_state) {
     }
   }
   else {
-    if ($test->vid) {
+    if (!empty($test->vid)) {
       $view->vid = $test->vid;
     }
   }
