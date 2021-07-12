@@ -106,7 +106,7 @@ function views_theme($existing, $type, $theme, $path) {
   );
 
   $variables = array(
-    // For displays, we pass in a dummy array as the first parameter, since
+    // For displays, we pass in a sample array as the first parameter, since
     // $view is an object but the core contextual_preprocess() function only
     // attaches contextual links when the primary theme argument is an array.
     'display' => array('view_array' => array(), 'view' => NULL),
@@ -968,7 +968,7 @@ function views_add_contextual_links(&$render_element, $location, $view, $display
     // contextual links that are intended to be displayed in the requested
     // location.
     $plugin = views_fetch_plugin_data('display', $view->display[$display_id]->display_plugin);
-    // If contextual links locations are not set, provide a sane default. (To
+    // If contextual links locations are not set, provide a simple default. (To
     // avoid displaying any contextual links at all, a display plugin can still
     // set 'contextual links locations' to, e.g., an empty array).
     $plugin += array('contextual links locations' => array('view'));
@@ -1488,7 +1488,7 @@ function views_get_plugin($type, $plugin, $reset = FALSE) {
  */
 function views_get_localization_plugin() {
   $plugin = variable_get('views_localization_plugin', '');
-  // Provide sane default values for the localization plugin.
+  // Provide default values for the localization plugin.
   if (empty($plugin)) {
     if (module_exists('locale')) {
       $plugin = 'core';
@@ -2591,7 +2591,8 @@ function views_var_export($var, $prefix = '', $init = TRUE) {
 /**
  * Prepare a string for use as a valid CSS identifier.
  *
- * This function is similar to a core version but with more sane filter values.
+ * This function is similar to a core version but with more intuitive filter
+ * values.
  * http://www.w3.org/TR/CSS21/syndata.html#characters shows the syntax for valid
  * CSS identifiers (including element names, classes, and IDs in selectors).
  *

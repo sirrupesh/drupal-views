@@ -93,7 +93,7 @@ function template_preprocess_views_view(&$vars) {
   $vars['attachment_before'] = !empty($view->attachment_before) ? $view->attachment_before : '';
   $vars['attachment_after'] = !empty($view->attachment_after) ? $view->attachment_after : '';
 
-  // Add contextual links to the view. We need to attach them to the dummy
+  // Add contextual links to the view. We need to attach them to the sample
   // $view_array variable, since contextual_preprocess() requires that they be
   // attached to an array (not an object) in order to process them. For our
   // purposes, it doesn't matter what we attach them to, since once they are

@@ -497,9 +497,9 @@ function hook_views_data_alter(&$data) {
 
   // This example adds a relationship to table {foo}, so that 'foo' views can
   // add this table using a relationship. Because we don't want to write over
-  // the primary key field definition for the {foo}.fid field, we use a dummy
-  // field name as the key.
-  $data['foo']['dummy_name'] = array(
+  // the primary key field definition for the {foo}.fid field, we use a
+  // placeholder field name as the key.
+  $data['foo']['sample_name'] = array(
     'title' => t('Example relationship'),
     'help' => t('Example help'),
     'relationship' => array(
