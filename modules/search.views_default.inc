@@ -35,12 +35,11 @@ function search_views_default_views() {
   $handler->display->display_options['style_options']['type'] = 'ol';
   $handler->display->display_options['row_plugin'] = 'fields';
   /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['text']['id'] = 'area';
-  $handler->display->display_options['empty']['text']['table'] = 'views';
-  $handler->display->display_options['empty']['text']['field'] = 'area';
-  $handler->display->display_options['empty']['text']['empty'] = FALSE;
-  $handler->display->display_options['empty']['text']['content'] = 'No backlinks found.';
-  $handler->display->display_options['empty']['text']['format'] = '1';
+  $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['empty']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['empty']['area_text_custom']['empty'] = FALSE;
+  $handler->display->display_options['empty']['area_text_custom']['content'] = 'No backlinks found.';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
