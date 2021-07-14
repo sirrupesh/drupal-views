@@ -275,7 +275,7 @@ class views_plugin_exposed_form extends views_plugin {
         $form['sort_order'] = array(
           '#type' => 'select',
           '#options' => $sort_order,
-          '#title' => t('Order'),
+          '#title' => t('Order', array(), array('context' => 'Sort order')),
           '#default_value' => $default_sort_order,
         );
       }
