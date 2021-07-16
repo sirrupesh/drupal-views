@@ -55,7 +55,7 @@ class views_handler_field_entity extends views_handler_field {
 
     if (!empty($this->relationship)) {
       foreach ($this->view->relationship as $relationship) {
-        if ($relationship->alias == $this->relationship) {
+        if (isset($relationship->alias) && $relationship->alias == $this->relationship) {
           $base_table = $relationship->definition['base'];
           $this->table_alias = $relationship->alias;
 

@@ -1646,7 +1646,7 @@ class views_plugin_query_default extends views_plugin_query {
 
     if (!empty($relationship)) {
       foreach ($this->view->relationship as $current) {
-        if ($current->alias == $relationship) {
+        if (isset($current->alias) && $current->alias == $relationship) {
           $base_table = $current->definition['base'];
           $base_table_alias = $relationship;
           break;
