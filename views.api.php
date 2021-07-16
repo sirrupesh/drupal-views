@@ -466,10 +466,14 @@ function hook_views_data() {
  *
  * You can add/edit/remove existing tables defined by hook_views_data().
  *
- * This hook should be placed in MODULENAME.views.inc and it will be
- * auto-loaded. MODULENAME.views.inc must be in the directory specified by the
- * 'path' key returned by MODULENAME_views_api(), or the same directory as the
- * .module file, if 'path' is unspecified.
+ * This hook should be placed in MODULENAME.views_default.inc and it will be
+ * auto-loaded. MODULENAME.views_default.inc must be in the directory specified
+ * by the 'path' key returned by MODULENAME_views_api(), or the same directory
+ * as the .module file, if 'path' is unspecified.
+ *
+ * After adding this hook to an existing module, you will need to clear the
+ * Drupal menu cache and the Views cache to have your default views be
+ * recognized.
  *
  * @param array $data
  *   An array of all Views data, passed by reference. See hook_views_data() for
