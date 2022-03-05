@@ -2927,6 +2927,9 @@ function views_ui_ajax_forms($key = NULL) {
     ),
   );
 
+  // Allow other modules to add their own forms or modify existing ones.
+  drupal_alter('views_ui_ajax_forms', $forms);
+
   if ($key) {
     return !empty($forms[$key]) ? $forms[$key] : NULL;
   }
