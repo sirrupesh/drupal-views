@@ -200,7 +200,7 @@ function views_ui_preview($view, $display_id, $args = array()) {
           // Only the SQL default class has a method getArguments.
           $quoted = array();
 
-          if (get_class($view->query) == 'views_plugin_query_default') {
+          if ($view->query instanceof views_plugin_query_default) {
             $quoted = $query->getArguments();
             $connection = Database::getConnection();
             foreach ($quoted as $key => $val) {
