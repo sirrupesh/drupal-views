@@ -1234,7 +1234,7 @@ class view extends views_db_object {
    * @param string $display_id
    *   The machine name of the display, which should be rendered.
    *
-   * @return string|NULL
+   * @return array|string|null
    *   Return the output of the rendered view or NULL if something failed in the
    *   process.
    */
