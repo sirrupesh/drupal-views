@@ -2201,7 +2201,10 @@ class view extends views_db_object {
     // Ensure this view supports translation, we have a display, and we
     // have a localization plugin.
     // @todo Export does not init every handler.
-    if (($this->is_translatable() || $op == 'export') && $this->init_display() && $this->init_localization()) {
+    if (($this->is_translatable() || $op == 'export')
+        && $this->init_display()
+        && $this->init_localization()
+        && isset($this->localization_plugin->view->display)) {
       $this->localization_plugin->process_locale_strings($op);
     }
   }
